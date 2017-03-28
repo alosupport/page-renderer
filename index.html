@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Page Renderer</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#"></a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar">
+          <ul class="nav navbar-nav">
+            <li><a href="index.html"><span class="fa fa-th-list"></span></a></li>
+            <li><a href="dashboard.html" class="data-link">Dashboard</a></li>
+            <li class="active"><a href="home.html" class="data-link">Home</a></li>
+            <li><a href="#" class="data-link"></a></li>
+
+          </ul>
+          <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="signout.html" class="data-link"></a></li>
+
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <div id="workspace">
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+          $(".data-link").click(function() {
+            var href = $(this).attr('href');
+            routeTo(href);
+            return false;
+          });
+
+          onpopstate = function(event) {
+            showPage(event.state);
+          }
+
+          function routeTo(href) {
+            showPage(href);
+            history.pushState(href, document.title + ' - ' + href, href);
+          }
+
+          function showPage(href) {
+            if (href == null || !href)
+              href = 'dashboard.html';
+            $.ajax({
+              url: getBaseURL() + href,
+              success: function(html) {
+                $("#workspace").html(html);
+              }
+            });
+          }
+
+          function getBaseURL() {
+            return location.protocol + "//" + location.hostname +
+                (location.port && ":" + location.port) + '/PageRenderer/';
+          }
+
+
+          routeTo(null);
+      });
+    </script>
+  </body>
+</html>
