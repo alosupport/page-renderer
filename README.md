@@ -5,7 +5,8 @@ Updates the history about the page rendered without loading the page.
 This is similar to turbolinks in rails gem, helps in showing the content of the page without reloading the page.
 
 ## How it works?
-Handles the click event of all anchor tag, then call the history.pushState method to store the tracking of pages navigated. In click event handler method the anchor tag href will be used to fetch the page via $.ajax method.
+Handles the click event of all anchor tag, then call the history.pushState method to store pages navigated. 
+For each event triggered html view will be fetched via $.ajax method.
 
 ## Coder view
     jQuery(document).ready(function($) {
